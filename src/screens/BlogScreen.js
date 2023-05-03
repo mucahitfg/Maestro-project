@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { View, FlatList, SafeAreaView, StyleSheet, ActivityIndicator } from 'react-native'
+import { View, FlatList, SafeAreaView, StyleSheet, ActivityIndicator, Button } from 'react-native'
 import BlogItems from '../components/BlogItems';
-
+import { useNavigation } from '@react-navigation/native';
 const BlogScreen = () => {
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(false)
   const [page, setPage] = useState(1)
   const [refreshing, setRefreshing] = useState(false)
+  const navigation = useNavigation()
 
   async function fetchData() {
     try {
@@ -36,7 +37,6 @@ const BlogScreen = () => {
       setRefreshing(false)
 
     }, 500);
-
   }
 
   const renderLoading = () => {
@@ -52,7 +52,13 @@ const BlogScreen = () => {
     <SafeAreaView style={styles.container}>
       <FlatList
         data={data}
-        renderItem={({ item }) => <BlogItems item={item} />}
+        renderItem={({ item }) =>
+          <BlogItems
+            onPress={() => navigation.navigate('Blog Detail', { content: item.content })}
+            item={item}
+          />
+        }
+        keyExtractor={(item) => item.postId}
         showsVerticalScrollIndicator={false}
         ListFooterComponent={renderLoading}
         onEndReached={loadMoreItems}

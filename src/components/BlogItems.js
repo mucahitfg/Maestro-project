@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
         padding: 15,
         borderBottomWidth: 1,
         borderColor: '#00708b',
+        
     },
     readingTime: {
         color: '#90827c',

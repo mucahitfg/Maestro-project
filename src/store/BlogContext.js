@@ -1,21 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createContext } from "react";
 
 export const BlogContext = createContext({
-    ids: [],
-    selectedBlog: (id) => { },
+    data: [],
 })
-
 function BlogContextProvider({ children }) {
-    const [blogIds, setBlogIds] = useState([])
+    const [data, setData] = useState([])
 
-    function selectedBlog(id) {
-        setBlogIds((currentBlogIds) => [...currentBlogIds, id])
-    }
+    useEffect(() => {
+        fetch('https://www.lenasoftware.com/api/v1/en/maestro/1')
+            .then((response) => response.json())
+            .then((data) => setData(data))
+            .catch((error) => console.log(error))
+    }, [])
+
 
     const value = {
-        ids: blogIds,
-        selectedBlog: selectedBlog
+        data: data,
+        setData: setData,
     }
 
     return (

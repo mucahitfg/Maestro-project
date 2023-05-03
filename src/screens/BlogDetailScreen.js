@@ -1,12 +1,23 @@
-import { View, Text, SafeAreaView } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
+import { SafeAreaView, StyleSheet } from 'react-native'
+import BlogDetailItems from '../components/BlogDetailItems'
+import { BlogContext } from '../store/BlogContext'
 
 const BlogDetailScreen = () => {
+  const { data } = useContext(BlogContext)
+
   return (
-    <SafeAreaView>
-      <Text>blogDetailScreen</Text>
+    <SafeAreaView style={styles.container}>
+      <BlogDetailItems data={data} />
     </SafeAreaView>
   )
 }
 
 export default BlogDetailScreen
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#7c7578'
+  },
+})
